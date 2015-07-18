@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Mail;
 use Config;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class DefaultController
@@ -20,7 +21,9 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        return view('default/index');
+        $books = \DB::table('books')->paginate(10);
+
+        return view('default/index', compact('books'));
     }
 
     /**

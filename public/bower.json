@@ -1,0 +1,6 @@
+{
+  "name": "laravel-5-demo",
+    "dependencies": {
+    "bootstrap-css": "3.*"
+  }
+}

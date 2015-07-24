@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        $books = \DB::table('books')->paginate(10);
+        $books = \DB::table('book')->paginate(10);
 
         return view('default/index', compact('books'));
     }

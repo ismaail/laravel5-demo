@@ -13,7 +13,7 @@
             <tbody>
             @foreach ($books as $book)
                 <tr>
-                    <td>{{ $book->title }}</td>
+                    <td><a href="/show/{{ $book->slug }}">{{ $book->title }}</a></td>
                     <td>{{ $book->pages }}</td>
                 </tr>
             @endforeach

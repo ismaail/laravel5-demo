@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Mail;
 use Config;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Book;
+use App\Exceptions\ApplicationException;
 
 /**
  * Class DefaultController
@@ -18,12 +20,36 @@ class DefaultController extends Controller
 {
     /**
      * @return \Illuminate\View\View
+     *
+     * @throws ApplicationException
      */
     public function index()
     {
-        $books = \DB::table('book')->paginate(10);
+        $bookConfig = $this->getBookPaginationConfig();
+
+        if (! isset($bookConfig['pagination']['limit'])) {
+            throw new ApplicationException("Book configuration for pagination limitation not set");
+        }
+
+        $books = Book::findAll($bookConfig['pagination']['limit']);
 
         return view('default/index', compact('books'));
+    }
+
+    /**
+     * Get Book configuration
+     *
+     * @return array
+     *
+     * @throws ApplicationException     If Book config is not set
+     */
+    private function getBookPaginationConfig()
+    {
+        if (! Config::has('book')) {
+            throw new ApplicationException("Book configuration not set");
+        }
+
+        return Config::get('book');
     }
 
     /**

@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'DefaultController@index');
+Route::get('/show/{slug}', 'DefaultController@show');

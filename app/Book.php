@@ -16,4 +16,16 @@ class Book extends Model
      * @var string
      */
     protected $table = 'book';
+
+    /**
+     * Find All books
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function findAll($limit)
+    {
+        return \DB::table('book')->paginate($limit);
+    }
 }

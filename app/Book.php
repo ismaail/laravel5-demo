@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Class Book
@@ -27,5 +28,23 @@ class Book extends Model
     public static function findAll($limit)
     {
         return \DB::table('book')->paginate($limit);
+    }
+
+    /**
+     * Find Book by slug
+     *
+     * @param string $slug
+     *
+     * @return Book
+     */
+    public static function findBySlug($slug)
+    {
+        $book = self::where('slug', $slug)->first();
+
+        if (is_null($book)) {
+            throw new ModelNotFoundException("Book not found");
+        }
+
+        return $book;
     }
 }

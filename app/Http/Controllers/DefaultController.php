@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use App\Http\Requests;
@@ -50,6 +51,25 @@ class DefaultController extends Controller
         }
 
         return Config::get('book');
+    }
+
+    /**
+     * Show Book details page
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\View\View
+     */
+    public function show($slug)
+    {
+        try {
+            $book = Book::findBySlug($slug);
+
+            return View('default/show', compact('book'));
+
+        } catch (ModelNotFoundException $e) {
+            \App::abort(404, $e->getMessage());
+        }
     }
 
     /**

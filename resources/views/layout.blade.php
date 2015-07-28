@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="/lib/bootstrap-css/css/bootstrap.min.css"/>
 </head>
 <body>
+    <header class="main-header container-fluid">
+        <div class="logo col-sm-8"><a href="/"><h1>Book Keeper</h1></a></div>
+        <div class="user-box col-sm-4 pull-right">
+        @if (Auth::user())
+            <span>{{ Auth::user()->username }}</span> | <a href="/user/logout">Logout</a>
+        @else
+            <a href="/user/register">Sign-up</a> |
+            <a href="/user/login">Login</a>
+        @endif
+        </div>
+    </header>
     <div class="container">
         @yield("content")
     </div>

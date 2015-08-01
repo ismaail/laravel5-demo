@@ -12,6 +12,7 @@ use Config;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Book;
 use App\Exceptions\ApplicationException;
+use App\Http\Requests\BookRequest;
 
 /**
  * Class DefaultController
@@ -70,6 +71,32 @@ class DefaultController extends Controller
         } catch (ModelNotFoundException $e) {
             \App::abort(404, $e->getMessage());
         }
+    }
+
+    /**
+     * Create new book
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return View('default/create');
+    }
+
+    /**
+     * Save new book
+     *
+     * @param BookRequest $request
+     *
+     * @return string
+     */
+    public function store(BookRequest $request)
+    {
+        $input = $request->all();
+
+        $book = Book::create($input);
+
+        return redirect('/books/' . $book->slug);
     }
 
     /**

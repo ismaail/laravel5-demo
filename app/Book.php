@@ -19,6 +19,22 @@ class Book extends Model
     protected $table = 'book';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'description',
+        'pages',
+    ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Find All books
      *
      * @param int $limit

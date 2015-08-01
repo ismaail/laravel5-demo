@@ -7,6 +7,10 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+/**
+ * Class AuthController
+ * @package App\Http\Controllers\Auth
+ */
 class AuthController extends Controller
 {
     /*

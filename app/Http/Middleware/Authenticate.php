@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
+/**
+ * Class Authenticate
+ * @package App\Http\Middleware
+ */
 class Authenticate
 {
     /**
@@ -18,7 +22,6 @@ class Authenticate
      * Create a new filter instance.
      *
      * @param  Guard  $auth
-     * @return void
      */
     public function __construct(Guard $auth)
     {

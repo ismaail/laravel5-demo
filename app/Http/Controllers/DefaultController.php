@@ -98,20 +98,4 @@ class DefaultController extends Controller
 
         return redirect('/books/' . $book->slug);
     }
-
-    /**
-     * @param string $to
-     * @param string $subject
-     * @param array $body
-     */
-    private function sendEmail($to, $subject, $body)
-    {
-        Mail::send('emails/blank', ['body' => $body], function (Message $message) use ($to, $subject) {
-            $mailConfig = Config::get('mail');
-
-            $message->from($mailConfig['from']['address'], $mailConfig['from']['name']);
-            $message->to($to)
-                    ->subject($subject);
-        });
-    }
 }

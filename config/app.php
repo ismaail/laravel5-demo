@@ -144,6 +144,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
     ],

@@ -12,7 +12,9 @@
 */
 
 Route::get('/', 'DefaultController@index');
-Route::get('/show/{slug}', 'DefaultController@show');
+Route::get('/books/{slug}', 'DefaultController@show');
+Route::get('/create', 'DefaultController@create');
+Route::post('/books', 'DefaultController@store');
 
 Route::controllers([
     'user'     => 'Auth\AuthController',

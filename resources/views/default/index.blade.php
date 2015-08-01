@@ -3,6 +3,14 @@
 @section("content")
     <h1>Book Keeper</h1>
     <section>
+        <div class="row">
+            <div class="col-sm-7 col-md-8"><h2>Books list:</h2></div>
+            <div class="col-xs-12 col-sm-3 col-md-2 pull-right">
+                <a href="/create" class="button-link">
+                    <button class="input-sm form-control">Add new book</button>
+                </a>
+            </div>
+        </div>
         <table class="table">
             <thead>
             <tr>

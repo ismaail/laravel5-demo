@@ -120,4 +120,20 @@ class DefaultController extends Controller
 
         return redirect('/books/' . $book->slug);
     }
+
+    /**
+     * Delete book
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroy($slug)
+    {
+        $book = Book::findBySlugOrFail($slug);
+
+        $book->destroy($book->id);
+
+        return redirect('/');
+    }
 }

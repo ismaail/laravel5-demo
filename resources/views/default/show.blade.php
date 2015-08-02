@@ -14,5 +14,11 @@
                 <button class="input-sm form-control">Edit</button>
             </a>
         </div>
+        <div class="col-sm-4 col-md-2">
+            {!! Form::model($book, ['url' => '/books/'.$book->slug, 'method' => 'DELETE']) !!}
+            {!! Form::submit( 'Delete' , ['class' => 'input-sm form-control']) !!}
+            {!! Form::close() !!}
+        </div>
+
     </article>
 @endsection

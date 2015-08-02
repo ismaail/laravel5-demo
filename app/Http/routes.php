@@ -17,6 +17,7 @@ Route::get('/create', 'DefaultController@create');
 Route::get('/books/{slug}/edit', 'DefaultController@edit');
 Route::post('/books', 'DefaultController@store');
 Route::put('/books/{slug}', 'DefaultController@update');
+Route::delete('/books/{slug}', 'DefaultController@destroy');
 
 Route::controllers([
     'user'     => 'Auth\AuthController',

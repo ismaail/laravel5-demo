@@ -83,7 +83,7 @@ class DefaultController extends Controller
      *
      * @param BookRequest $request
      *
-     * @return string
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(BookRequest $request)
     {
@@ -111,6 +111,8 @@ class DefaultController extends Controller
      *
      * @param string $slug
      * @param BookRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($slug, BookRequest $request)
     {
@@ -119,5 +121,21 @@ class DefaultController extends Controller
         $book->update($request->all());
 
         return redirect('/books/' . $book->slug);
+    }
+
+    /**
+     * Delete book
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroy($slug)
+    {
+        $book = Book::findBySlugOrFail($slug);
+
+        $book->destroy($book->id);
+
+        return redirect('/');
     }
 }

@@ -91,6 +91,8 @@ class DefaultController extends Controller
 
         $book = Book::create($input);
 
+        session()->flash('success_message', 'Book created successfully');
+
         return redirect('/books/' . $book->slug);
     }
 
@@ -120,6 +122,8 @@ class DefaultController extends Controller
 
         $book->update($request->all());
 
+        session()->flash('success_message', 'Book updated successfully');
+
         return redirect('/books/' . $book->slug);
     }
 
@@ -135,6 +139,8 @@ class DefaultController extends Controller
         $book = Book::findBySlugOrFail($slug);
 
         $book->destroy($book->id);
+
+        session()->flash('success_message', 'Book removed successfully');
 
         return redirect('/');
     }

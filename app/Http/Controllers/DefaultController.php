@@ -98,4 +98,41 @@ class DefaultController extends Controller
 
         return redirect('/books/' . $book->slug);
     }
+
+    /**
+     * @param string $slug
+     *
+     * @return \Illuminate\View\View
+     */
+    public function edit($slug)
+    {
+        try {
+            $book = Book::findBySlug($slug);
+
+            return View('default/edit', compact('book'));
+
+        } catch (ModelNotFoundException $e) {
+            \App::abort(404, $e->getMessage());
+        }
+    }
+
+    /**
+     * Update book
+     *
+     * @param string $slug
+     * @param BookRequest $request
+     */
+    public function update($slug, BookRequest $request)
+    {
+        try {
+            $book = Book::findBySlug($slug);
+
+            $book->update($request->all());
+
+            return redirect('/books/' . $book->slug);
+
+        } catch (ModelNotFoundException $e) {
+            \App::abort(404, $e->getMessage());
+        }
+    }
 }

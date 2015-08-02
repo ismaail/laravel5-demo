@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Requests;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 /**
  * Class BookRequest
  * @package App\Http\Requests
@@ -24,10 +26,39 @@ class BookRequest extends Request
      */
     public function rules()
     {
-        return [
-            'title'       => 'required|min:3|unique:book',
-            'description' => 'required',
-            'pages'       => 'required|integer',
-        ];
+        switch ($this->method()) {
+            case 'PUT':
+                return [
+                    'title'       => "required|min:3|unique:book,title,{$this->getBookTitle()},title",
+                    'description' => 'required',
+                    'pages'       => 'required|integer',
+                ];
+
+            default:
+                return [
+                    'title'       => 'required|min:3|unique:book,title',
+                    'description' => 'required',
+                    'pages'       => 'required|integer',
+                ];
+        }
+    }
+
+    /**
+     * Get book title for current slug
+     *
+     * @return string
+     *
+     * @throws ModelNotFoundException   If book not found
+     */
+    private function getBookTitle()
+    {
+        $slug = \Request::route()->getParameter('slug');
+        $book = \App\Book::findBySlug($slug);
+
+        if (is_null($book)) {
+            throw new ModelNotFoundException("Book not found");
+        }
+
+        return $book->title;
     }
 }

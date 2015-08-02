@@ -63,14 +63,9 @@ class DefaultController extends Controller
      */
     public function show($slug)
     {
-        try {
-            $book = Book::findBySlug($slug);
+            $book = Book::findBySlugOrFail($slug);
 
             return View('default/show', compact('book'));
-
-        } catch (ModelNotFoundException $e) {
-            \App::abort(404, $e->getMessage());
-        }
     }
 
     /**
@@ -106,14 +101,9 @@ class DefaultController extends Controller
      */
     public function edit($slug)
     {
-        try {
-            $book = Book::findBySlug($slug);
+        $book = Book::findBySlugOrFail($slug);
 
-            return View('default/edit', compact('book'));
-
-        } catch (ModelNotFoundException $e) {
-            \App::abort(404, $e->getMessage());
-        }
+        return View('default/edit', compact('book'));
     }
 
     /**
@@ -124,15 +114,10 @@ class DefaultController extends Controller
      */
     public function update($slug, BookRequest $request)
     {
-        try {
-            $book = Book::findBySlug($slug);
+        $book = Book::findBySlugOrFail($slug);
 
-            $book->update($request->all());
+        $book->update($request->all());
 
-            return redirect('/books/' . $book->slug);
-
-        } catch (ModelNotFoundException $e) {
-            \App::abort(404, $e->getMessage());
-        }
+        return redirect('/books/' . $book->slug);
     }
 }

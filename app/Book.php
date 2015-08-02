@@ -77,4 +77,23 @@ class Book extends Model implements SluggableInterface
 
         return $book;
     }
+
+    /**
+     * Find book by slug or fail to 404 page
+     *
+     * @param string $slug
+     *
+     * @return Book
+     */
+    public static function findBySlugOrFail($slug)
+    {
+        try {
+            $book = self::findBySlug($slug);
+
+            return $book;
+
+        } catch (ModelNotFoundException $e) {
+            \App::abort(404, $e->getMessage());
+        }
+    }
 }

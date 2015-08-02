@@ -53,11 +53,7 @@ class BookRequest extends Request
     private function getBookTitle()
     {
         $slug = \Request::route()->getParameter('slug');
-        $book = \App\Book::findBySlug($slug);
-
-        if (is_null($book)) {
-            throw new ModelNotFoundException("Book not found");
-        }
+        $book = \App\Book::findBySlugOrFail($slug);
 
         return $book->title;
     }

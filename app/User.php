@@ -16,6 +16,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword;
 
+    /**#@+
+     * @const string
+     */
+    const ROLE_ADMIN  = 'ROLE_ADMIN';
+    const ROLE_MEMBER = 'ROLE_MEMBER';
+    /**#@-*/
+
     /**
      * The database table used by the model.
      *
@@ -36,4 +43,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Default attributes values
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'roles' => self::ROLE_MEMBER,
+    ];
 }

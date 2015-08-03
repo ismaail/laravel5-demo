@@ -21,6 +21,14 @@ use App\Http\Requests\BookRequest;
 class DefaultController extends Controller
 {
     /**
+     * Create a new authentication controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('member', ['except' => ['index', 'show']]);
+    }
+
+    /**
      * @return \Illuminate\View\View
      *
      * @throws ApplicationException

@@ -9,6 +9,7 @@
         <p>
             {{ $book->description }}
         </p>
+        @if (User::isAdmin())
         <div class="col-sm-4 col-md-2">
             <a href="/books/{{ $book->slug }}/edit" class="button-link">
                 <button class="input-sm form-control">Edit</button>
@@ -19,6 +20,6 @@
             {!! Form::submit( 'Delete' , ['class' => 'input-sm form-control']) !!}
             {!! Form::close() !!}
         </div>
-
+        @endif
     </article>
 @endsection

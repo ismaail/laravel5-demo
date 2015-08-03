@@ -146,6 +146,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\MemberServiceProvider::class,
 
     ],
 
@@ -197,6 +198,7 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+        'User'      => App\Member\Facades\User::class,
 
     ],
 

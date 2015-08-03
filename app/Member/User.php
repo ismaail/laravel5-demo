@@ -17,7 +17,7 @@ class User
      */
     public function isAdmin()
     {
-        if (Auth::user()
+        if (Auth::check()
             && App\User::ROLE_ADMIN === Auth::user()->roles
         ) {
             return true;

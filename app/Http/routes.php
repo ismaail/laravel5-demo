@@ -12,8 +12,8 @@
 */
 
 Route::get('/', 'DefaultController@index');
+Route::get('/books/create', 'DefaultController@create');
 Route::get('/books/{slug}', 'DefaultController@show');
-Route::get('/create', 'DefaultController@create');
 Route::get('/books/{slug}/edit', 'DefaultController@edit');
 Route::post('/books', 'DefaultController@store');
 Route::put('/books/{slug}', 'DefaultController@update');

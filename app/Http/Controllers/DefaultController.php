@@ -2,14 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Illuminate\Mail\Message;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Mail;
 use Config;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Book;
 use App\Exceptions\ApplicationException;
 use App\Http\Requests\BookRequest;

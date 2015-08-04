@@ -28,7 +28,7 @@ class DefaultControllerTest extends \TestCase
     /**
      * @group DefaultController@index
      */
-    public function testActionIndexIsAccessibleNonAdminGuest()
+    public function testActionIndexIsAccessibleNonAdmin()
     {
         $this->mockUserRoleIsNotAdmin();
 
@@ -123,7 +123,7 @@ class DefaultControllerTest extends \TestCase
     /**
      * @group DefaultController@store
      */
-    public function testActionStoreIsNotAccessibleByAdmin()
+    public function testActionStoreIsAccessibleByAdmin()
     {
         $this->mockUserRoleIsAdmin();
 

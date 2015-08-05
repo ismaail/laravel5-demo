@@ -6,17 +6,24 @@ use Illuminate\Database\Migrations\Migration;
 class CreateBooksTable extends Migration
 {
     /**
+     * @const string
+     */
+    const TABLE_NAME = 'book';
+
+    /**
      * Run the migration
      */
     public function up()
     {
-        Schema::create('book', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title', 150);
-            $table->string('slug', 150);
-            $table->text('description');
-            $table->integer('pages', false, true);
-        });
+        if (! Schema::hasTable(self::TABLE_NAME)) {
+            Schema::create(self::TABLE_NAME, function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('title', 150);
+                $table->string('slug', 150);
+                $table->text('description');
+                $table->integer('pages', false, true);
+            });
+        }
     }
 
     /**
@@ -24,6 +31,6 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

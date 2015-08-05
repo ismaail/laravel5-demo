@@ -4,6 +4,7 @@ namespace AppTest\Http\Controllers;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use AppTest\Traits;
 
 /**
  * Class DefaultControllerTest
@@ -11,18 +12,23 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class DefaultControllerTest extends \TestCase
 {
-    private function mockUserRoleIsAdmin()
+    use Traits\Member;
+    use Traits\Book;
+
+    public function tearDown()
     {
-        \User::shouldReceive('isAdmin')
-                ->once()
-                ->andReturn(true);
+        $this->clearBooks();
+
+        parent::tearDown();
     }
 
-    private function mockUserRoleIsNotAdmin()
+    private function createSingleBook()
     {
-        \User::shouldReceive('isAdmin')
-                ->once()
-                ->andReturn(false);
+        $this->createBooks([
+            'title'       => 'Book Title',
+            'description' => 'Book Description',
+            'pages'       => 0,
+        ]);
     }
 
     /**
@@ -54,10 +60,8 @@ class DefaultControllerTest extends \TestCase
      */
     public function testActionShowIsAccessibleByNonAdmin()
     {
-        $this->markTestIncomplete('must mock Book Model');
-
         $this->mockUserRoleIsNotAdmin();
-        $this->mockBookFindBySlug();
+        $this->createSingleBook();
 
         $this->call('GET', '/books/book-title');
 
@@ -69,14 +73,12 @@ class DefaultControllerTest extends \TestCase
      */
     public function testActionShowIsAccessibleByAdmin()
     {
-        $this->markTestIncomplete('must mock Book Model');
-
         $this->mockUserRoleIsAdmin();
-        $this->mockBookFindBySlug();
+        $this->createSingleBook();
 
         $this->call('GET', '/books/book-title');
 
-        $this->assertResponseStatus(401);
+        $this->assertResponseOk();
     }
 
     /**

@@ -28,7 +28,10 @@
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"
-        ]
+        ],
+        "psr-4": {
+            "AppTest\\": "tests/AppTest"
+        }
     },
     "scripts": {
         "post-install-cmd": [

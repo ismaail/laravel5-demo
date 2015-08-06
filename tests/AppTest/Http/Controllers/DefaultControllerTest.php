@@ -15,6 +15,18 @@ class DefaultControllerTest extends \TestCase
     use Traits\Member;
     use Traits\Book;
 
+    /**
+     * @var array
+     */
+    private $singleBook = [
+        'data' => [
+            'title'       => 'Book Title',
+            'description' => 'Book Description',
+            'pages'       => 0,
+        ],
+        'slug' => 'book-title',
+    ];
+
     public function tearDown()
     {
         $this->clearBooks();
@@ -24,11 +36,7 @@ class DefaultControllerTest extends \TestCase
 
     private function createSingleBook()
     {
-        $this->createBooks([
-            'title'       => 'Book Title',
-            'description' => 'Book Description',
-            'pages'       => 0,
-        ]);
+        $this->createBooks($this->singleBook['data']);
     }
 
     /**
@@ -63,7 +71,7 @@ class DefaultControllerTest extends \TestCase
         $this->mockUserRoleIsNotAdmin();
         $this->createSingleBook();
 
-        $this->call('GET', '/books/book-title');
+        $this->call('GET', sprintf('/books/%s', $this->singleBook['slug']));
 
         $this->assertResponseOk();
     }
@@ -76,7 +84,7 @@ class DefaultControllerTest extends \TestCase
         $this->mockUserRoleIsAdmin();
         $this->createSingleBook();
 
-        $this->call('GET', '/books/book-title');
+        $this->call('GET', sprintf('/books/%s', $this->singleBook['slug']));
 
         $this->assertResponseOk();
     }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Config;
-use App\Book;
 use App\Exceptions\ApplicationException;
 use App\Http\Requests\BookRequest;
+use App\Repositories\BookRepository;
 
 /**
  * Class DefaultController
@@ -15,11 +15,18 @@ use App\Http\Requests\BookRequest;
 class DefaultController extends Controller
 {
     /**
+     * @var BookRepository
+     */
+    protected $bookRepo;
+
+    /**
      * Create a new authentication controller instance.
      */
     public function __construct()
     {
         $this->middleware('member', ['except' => ['index', 'show']]);
+
+        $this->bookRepo = new BookRepository();
     }
 
     /**
@@ -35,7 +42,7 @@ class DefaultController extends Controller
             throw new ApplicationException("Book configuration for pagination limitation not set");
         }
 
-        $books = Book::findAll($bookConfig['pagination']['limit']);
+        $books = $this->bookRepo->paginate($bookConfig['pagination']['limit']);
 
         return view('default/index', compact('books'));
     }
@@ -65,7 +72,7 @@ class DefaultController extends Controller
      */
     public function show($slug)
     {
-            $book = Book::findBySlugOrFail($slug);
+            $book = $this->bookRepo->findBySlugOrFail($slug);
 
             return View('default/show', compact('book'));
     }
@@ -89,9 +96,7 @@ class DefaultController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $input = $request->all();
-
-        $book = Book::create($input);
+        $book = $this->bookRepo->create($request->all());
 
         session()->flash('success_message', 'Book created successfully');
 
@@ -105,7 +110,7 @@ class DefaultController extends Controller
      */
     public function edit($slug)
     {
-        $book = Book::findBySlugOrFail($slug);
+        $book =$this->bookRepo->findBySlugOrFail($slug);
 
         return View('default/edit', compact('book'));
     }
@@ -120,9 +125,7 @@ class DefaultController extends Controller
      */
     public function update($slug, BookRequest $request)
     {
-        $book = Book::findBySlugOrFail($slug);
-
-        $book->update($request->all());
+        $book = $this->bookRepo->update($slug, $request->all());
 
         session()->flash('success_message', 'Book updated successfully');
 
@@ -138,9 +141,7 @@ class DefaultController extends Controller
      */
     public function destroy($slug)
     {
-        $book = Book::findBySlugOrFail($slug);
-
-        $book->destroy($book->id);
+        $this->bookRepo->delete($slug);
 
         session()->flash('success_message', 'Book removed successfully');
 

@@ -2,6 +2,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Repositories\BookRepository;
 
 /**
  * Class BookRequest
@@ -53,7 +54,9 @@ class BookRequest extends Request
     private function getBookTitle()
     {
         $slug = \Request::route()->getParameter('slug');
-        $book = \App\Book::findBySlugOrFail($slug);
+
+        $bookRepo = new BookRepository();
+        $book     = $bookRepo->findBySlugOrFail($slug);
 
         return $book->title;
     }

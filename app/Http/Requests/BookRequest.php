@@ -27,20 +27,26 @@ class BookRequest extends Request
      */
     public function rules()
     {
+        return [
+            'title'       => $this->getTitleRule(),
+            'description' => 'required',
+            'pages'       => 'required|integer',
+        ];
+    }
+
+    /**
+     * Get the rule used to validate book title
+     *
+     * @return string
+     */
+    private function getTitleRule()
+    {
         switch ($this->method()) {
             case 'PUT':
-                return [
-                    'title'       => "required|min:3|unique:book,title,{$this->getBookTitle()},title",
-                    'description' => 'required',
-                    'pages'       => 'required|integer',
-                ];
+                return sprintf('required|min:3|unique:book,title,%s,title', $this->getBookTitle());
 
             default:
-                return [
-                    'title'       => 'required|min:3|unique:book,title',
-                    'description' => 'required',
-                    'pages'       => 'required|integer',
-                ];
+                return 'required|min:3|unique:book,title';
         }
     }
 
